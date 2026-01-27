@@ -1,0 +1,133 @@
+/* Design System Variables - SPILF Medical Application */
+
+:root {
+    /* Medical Color Palette */
+    --color-primary: hsl(210, 85%, 50%);
+    --color-primary-light: hsl(210, 85%, 65%);
+    --color-primary-dark: hsl(210, 85%, 35%);
+
+    --color-secondary: hsl(160, 70%, 45%);
+    --color-secondary-light: hsl(160, 70%, 60%);
+    --color-secondary-dark: hsl(160, 70%, 30%);
+
+    /* Infection-specific colors */
+    --color-bacterial: hsl(25, 85%, 55%);
+    --color-viral: hsl(280, 70%, 55%);
+    --color-parasitic: hsl(50, 85%, 50%);
+
+    /* Severity levels */
+    --color-severity-mild: hsl(120, 60%, 50%);
+    --color-severity-moderate: hsl(40, 90%, 55%);
+    --color-severity-severe: hsl(15, 85%, 55%);
+    --color-severity-critical: hsl(0, 75%, 50%);
+
+    /* Neutral colors */
+    --color-background: hsl(210, 20%, 98%);
+    --color-surface: hsl(0, 0%, 100%);
+    --color-surface-elevated: hsl(210, 20%, 99%);
+
+    --color-text-primary: hsl(220, 20%, 15%);
+    --color-text-secondary: hsl(220, 15%, 40%);
+    --color-text-tertiary: hsl(220, 10%, 60%);
+
+    --color-border: hsl(220, 15%, 88%);
+    --color-border-light: hsl(220, 10%, 93%);
+
+    /* Status colors */
+    --color-success: hsl(145, 65%, 45%);
+    --color-warning: hsl(40, 88%, 54%);
+    --color-error: hsl(0, 72%, 51%);
+    --color-info: hsl(210, 85%, 50%);
+
+    /* Care pathway colors */
+    --color-symptoms: hsl(280, 65%, 55%);
+    --color-screening: hsl(200, 70%, 50%);
+    --color-microbiology: hsl(180, 60%, 45%);
+    --color-diagnosis: hsl(25, 80%, 55%);
+    --color-treatment: hsl(145, 65%, 45%);
+    --color-prevention: hsl(50, 85%, 50%);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-light) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(210, 85%, 50%) 0%, hsl(160, 70%, 45%) 100%);
+
+    /* Spacing scale */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+
+    /* Typography */
+    --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-medical: 'Roboto', 'Inter', sans-serif;
+    --font-family-mono: 'Fira Code', 'Courier New', monospace;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+
+    /* Border radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+
+    /* Z-index scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: hsl(220, 20%, 12%);
+        --color-surface: hsl(220, 18%, 16%);
+        --color-surface-elevated: hsl(220, 18%, 20%);
+
+        --color-text-primary: hsl(210, 20%, 95%);
+        --color-text-secondary: hsl(210, 15%, 75%);
+        --color-text-tertiary: hsl(210, 10%, 55%);
+
+        --color-border: hsl(220, 15%, 25%);
+        --color-border-light: hsl(220, 10%, 20%);
+    }
+}

@@ -1,0 +1,166 @@
+.infection-card {
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.infection-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    transition: width var(--transition-base);
+}
+
+.infection-card.bacterial::before {
+    background: var(--color-bacterial);
+}
+
+.infection-card.viral::before {
+    background: var(--color-viral);
+}
+
+.infection-card.parasitic::before {
+    background: var(--color-parasitic);
+}
+
+.infection-card:hover::before {
+    width: 8px;
+}
+
+.infection-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.infection-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.infection-card.bacterial .infection-type-badge {
+    background: hsla(25, 85%, 55%, 0.1);
+    color: var(--color-bacterial);
+}
+
+.infection-card.viral .infection-type-badge {
+    background: hsla(280, 70%, 55%, 0.1);
+    color: var(--color-viral);
+}
+
+.infection-card.parasitic .infection-type-badge {
+    background: hsla(50, 85%, 50%, 0.1);
+    color: var(--color-parasitic);
+}
+
+.infection-severity {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.infection-card-body {
+    margin-bottom: var(--spacing-lg);
+}
+
+.infection-name {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+    line-height: var(--line-height-tight);
+}
+
+.infection-common-name {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+}
+
+.infection-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.metadata-item {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.infection-phases {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--color-background);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.phases-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.phases-count {
+    font-size: var(--font-size-base);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+.infection-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.spilf-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+.card-arrow {
+    color: var(--color-primary);
+    transition: transform var(--transition-fast);
+}
+
+.infection-card:hover .card-arrow {
+    transform: translateX(4px);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .infection-name {
+        font-size: var(--font-size-xl);
+    }
+
+    .infection-metadata {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
