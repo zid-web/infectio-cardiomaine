@@ -835,6 +835,696 @@ export const sampleDiseases: InfectiousDisease[] = [
     lastUpdated: '2026-01-10',
     version: '2.0.5',
   },
+
+  // ================ INFECTIONS VIRALES ================
+  {
+    id: 'influenza',
+    name: 'Grippe Saisonnière',
+    commonNames: ['Influenza', 'Syndrome grippal'],
+    searchTerms: {
+      primary: ['grippe', 'influenza', 'syndrome grippal'],
+      synonyms: ['flu', 'état grippal'],
+      icd10: ['J10.1', 'J11.1'],
+      clinicalSigns: [
+        'fièvre brutale',
+        'myalgies',
+        'arthralgies',
+        'céphalées',
+        'asthénie intense',
+        'toux sèche',
+      ],
+      keywords: ['virus', 'influenza A', 'influenza B', 'respiratoire', 'épidémie hivernale'],
+    },
+    type: 'viral',
+    severity: 'moderate',
+    territory: 'community',
+    organ: 'Poumon',
+    specialty: ['Médecine générale', 'Infectiologie', 'Pneumologie'],
+    epidemiology: {
+      incidence: '2-8 millions de cas/an en France',
+      prevalence: 'Épidémie annuelle',
+      seasonality: 'Novembre à mars (pic décembre-janvier)',
+      riskFactors: [
+        'Âge > 65 ans',
+        'Grossesse',
+        'Obésité (IMC > 30)',
+        'Cardiopathie chronique',
+        'BPCO',
+        'Diabète',
+        'Immunodépression',
+      ],
+      ageGroups: ['Tous âges', 'Sujets âgés > 65 ans à risque'],
+    },
+    diagnostic: {
+      clinical: {
+        major: [
+          'Fièvre ≥ 39°C d\'apparition brutale',
+          'Myalgies diffuses',
+          'Signes respiratoires (toux, rhinorrhée)',
+          'Asthénie majeure',
+        ],
+        minor: [
+          'Céphalées frontales',
+          'Arthralgies',
+          'Odynophagie',
+          'Signes digestifs (enfant)',
+        ],
+        exclusion: [],
+      },
+      biological: {
+        supportive: [
+          'Lymphopénie',
+          'Thrombopénie modérée',
+          'CPK élevées (si myalgies)',
+        ],
+        threshold: {
+          leucocytes: 'Normal ou diminué',
+          CRP: '< 50 mg/L (virémie)',
+        },
+      },
+      imaging: {
+        firstLine: ['Radiographie thoracique si signes de gravité'],
+        secondLine: [],
+        findings: [
+          'Généralement normale',
+          'Pneumopathie virale si complication',
+        ],
+      },
+      microbiological: {
+        samples: ['Test rapide antigénique (TROD)', 'PCR nasopharyngée (référence)'],
+        tests: ['PCR multiplex respiratoire', 'Culture virale (recherche)'],
+        expectedPathogens: ['Influenza A', 'Influenza B'],
+      },
+    },
+    severityScores: [],
+    differentialDiagnosis: [
+      'COVID-19',
+      'Pneumonie bactérienne',
+      'VRS (nourrisson)',
+      'Mononucléose infectieuse',
+      'Dengue (contexte tropical)',
+    ],
+    pathogens: [
+      {
+        name: 'Influenza A',
+        frequency: '70-80%',
+        notes: 'Sous-types H1N1, H3N2',
+      },
+      {
+        name: 'Influenza B',
+        frequency: '20-30%',
+        notes: 'Lignées Victoria et Yamagata',
+      },
+    ],
+    resistanceData: [],
+    antibiotherapy: {
+      probabilistic: [
+        {
+          name: 'Traitement antiviral si formes sévères ou à risque',
+          indication: 'Grippe confirmée, sujet à risque ou forme grave',
+          context: 'community',
+          line: 'first',
+          molecules: [
+            {
+              name: 'Oseltamivir (Tamiflu®)',
+              dosage: '75mg',
+              frequency: '2x/jour',
+              duration: '5 jours',
+              route: 'PO',
+              notes: 'Débuter dans les 48h suivant le début des symptômes',
+            },
+          ],
+          contraindications: ['Allergie oseltamivir'],
+          monitoring: ['Évolution clinique', 'Signes de complication'],
+          adjustment: {
+            renal: [
+              {
+                creatinineClearance: '30-60 mL/min',
+                adjustment: 'Oseltamivir 30mg x2/jour',
+              },
+              {
+                creatinineClearance: '10-30 mL/min',
+                adjustment: 'Oseltamivir 30mg x1/jour',
+              },
+            ],
+          },
+          costCategory: 'moderate',
+          availability: 'widely-available',
+        },
+      ],
+      documented: [],
+      duration: {
+        standard: '5 jours',
+        severe: '5-10 jours selon évolution',
+        notes: 'Antiviraux efficaces uniquement si début précoce (< 48h)',
+      },
+    },
+    supportiveCare: [
+      'Repos au lit',
+      'Hydratation abondante',
+      'Paracétamol pour fièvre et douleurs',
+      'Éviter aspirine (enfant)',
+      'Isolement respiratoire',
+    ],
+    complications: [
+      'Pneumonie grippale primaire',
+      'Surinfection bactérienne (S. aureus, pneumocoque)',
+      'Myocardite',
+      'Encéphalite',
+      'Syndrome de Reye (enfant + aspirine)',
+      'Décompensation de comorbidités',
+    ],
+    prevention: {
+      primary: [
+        'Vaccination antigrippale annuelle',
+        'Mesures barrières (masque, lavage des mains)',
+        'Aération des locaux',
+        'Éviction collective si épidémie',
+      ],
+      secondary: [
+        'Prophylaxie post-exposition par oseltamivir (sujets à risque)',
+      ],
+      vaccination: [
+        {
+          name: 'Vaccin grippal quadrivalent',
+          schedule: 'Annuel (octobre-novembre)',
+          indication: '> 65 ans, femmes enceintes, comorbidités, professionnels de santé',
+        },
+      ],
+    },
+    guidelines: [
+      {
+        source: 'SPILF',
+        year: 2024,
+        title: 'Prise en charge de la grippe saisonnière',
+        version: '2024.2',
+        lastUpdated: '2024-10',
+      },
+      {
+        source: 'HAS',
+        year: 2024,
+        title: 'Stratégie de vaccination contre la grippe',
+        lastUpdated: '2024-08',
+      },
+    ],
+    lastUpdated: '2026-01-20',
+    version: '2.1.0',
+  },
+
+  {
+    id: 'covid-19',
+    name: 'COVID-19',
+    commonNames: ['Coronavirus 2019', 'SARS-CoV-2', 'Infection à coronavirus'],
+    searchTerms: {
+      primary: ['covid', 'coronavirus', 'sars-cov-2'],
+      synonyms: ['covid-19', 'infection covid', 'pneumonie covid'],
+      icd10: ['U07.1', 'U07.2'],
+      clinicalSigns: [
+        'fièvre',
+        'toux sèche',
+        'dyspnée',
+        'asthénie',
+        'anosmie',
+        'agueusie',
+        'céphalées',
+        'myalgies',
+      ],
+      keywords: ['virus', 'SARS-CoV-2', 'respiratoire', 'pandémie', 'variants'],
+    },
+    type: 'viral',
+    severity: 'severe',
+    territory: 'community',
+    organ: 'Poumon',
+    specialty: ['Infectiologie', 'Pneumologie', 'Réanimation'],
+    epidemiology: {
+      incidence: 'Variable selon vagues épidémiques',
+      prevalence: 'Endémique depuis 2020',
+      seasonality: 'Toute l\'année avec recrudescence automnale-hivernale',
+      riskFactors: [
+        'Âge > 65 ans',
+        'Obésité',
+        'Diabète',
+        'HTA',
+        'Cardiopathie',
+        'Insuffisance respiratoire chronique',
+        'Immunodépression',
+        'Cancer actif',
+      ],
+      ageGroups: ['Tous âges'],
+    },
+    diagnostic: {
+      clinical: {
+        major: [
+          'Symptômes respiratoires (toux, dyspnée)',
+          'Fièvre ou fébricule',
+          'Anosmie/agueusie récente (très évocateur)',
+        ],
+        minor: [
+          'Asthénie',
+          'Myalgies',
+          'Céphalées',
+          'Troubles digestifs',
+          'Éruption cutanée',
+        ],
+        exclusion: [],
+      },
+      biological: {
+        supportive: [
+          'Lymphopénie',
+          'CRP élevée (forme modérée à sévère)',
+          'D-dimères élevés',
+          'LDH augmentées',
+        ],
+        threshold: {
+          lymphocytes: '< 1000/mm³',
+          CRP: 'Variable (10-200 mg/L)',
+          'D-dimères': '> 500 ng/mL',
+        },
+      },
+      imaging: {
+        firstLine: ['Scanner thoracique sans injection'],
+        secondLine: ['Radiographie thoracique'],
+        findings: [
+          'Opacités en verre dépoli périphériques',
+          'Condensations parenchymateuses',
+          'Distribution bilatérale',
+          'Crazy paving (stade avancé)',
+        ],
+      },
+      microbiological: {
+        samples: ['RT-PCR nasopharyngée (gold standard)', 'Test antigénique rapide'],
+        tests: ['RT-PCR SARS-CoV-2', 'Sérologie (diagnostic rétrospectif)'],
+        expectedPathogens: ['SARS-CoV-2'],
+      },
+    },
+    severityScores: [],
+    differentialDiagnosis: [
+      'Grippe',
+      'Pneumonie bactérienne',
+      'Embolie pulmonaire',
+      'Pneumopathie interstitielle',
+    ],
+    pathogens: [
+      {
+        name: 'SARS-CoV-2',
+        frequency: '100%',
+        notes: 'Variants en évolution constante',
+      },
+    ],
+    resistanceData: [],
+    antibiotherapy: {
+      probabilistic: [
+        {
+          name: 'Traitement antiviral précoce (formes légères à modérées à risque)',
+          indication: 'COVID-19 confirmé, symptômes < 5 jours, facteurs de risque',
+          context: 'community',
+          line: 'first',
+          molecules: [
+            {
+              name: 'Paxlovid® (Nirmatrelvir/Ritonavir)',
+              dosage: '300mg/100mg',
+              frequency: '2x/jour',
+              duration: '5 jours',
+              route: 'PO',
+              notes: 'Débuter dans les 5 jours suivant le début des symptômes',
+            },
+          ],
+          contraindications: [
+            'Insuffisance rénale sévère (ClCr < 30)',
+            'Insuffisance hépatique sévère',
+            'Interactions médicamenteuses nombreuses',
+          ],
+          monitoring: ['Interactions médicamenteuses', 'Fonction rénale'],
+          adjustment: {
+            renal: [
+              {
+                creatinineClearance: '30-60 mL/min',
+                adjustment: 'Paxlovid 150mg/100mg x2/jour',
+              },
+            ],
+          },
+          costCategory: 'high',
+          availability: 'limited',
+        },
+        {
+          name: 'Traitement formes sévères hospitalisées',
+          indication: 'COVID-19 sévère avec oxygénothérapie',
+          context: 'hospital',
+          line: 'first',
+          molecules: [
+            {
+              name: 'Dexaméthasone',
+              dosage: '6mg',
+              frequency: '1x/jour',
+              duration: '10 jours',
+              route: 'IV ou PO',
+              notes: 'Corticothérapie systémique de référence',
+            },
+            {
+              name: 'Tocilizumab (si aggravation)',
+              dosage: '8mg/kg',
+              frequency: 'Dose unique',
+              duration: '1 jour',
+              route: 'IV',
+              notes: 'Anti-IL6 si aggravation rapide',
+            },
+          ],
+          monitoring: [
+            'Paramètres respiratoires',
+            'Glycémie (corticoïdes)',
+            'Bilan inflammatoire',
+          ],
+          costCategory: 'high',
+          availability: 'hospital-only',
+        },
+      ],
+      documented: [],
+      duration: {
+        standard: '5 jours (antiviraux)',
+        severe: '10 jours (corticoïdes)',
+        notes: 'Durées selon protocoles HAS/SFAR 2024',
+      },
+    },
+    supportiveCare: [
+      'Oxygénothérapie si SpO2 < 94%',
+      'Décubitus ventral (forme sévère)',
+      'Anticoagulation préventive ou curative',
+      'Nutrition et hydratation',
+      'Kinésithérapie respiratoire',
+    ],
+    complications: [
+      'SDRA',
+      'Choc septique',
+      'Thrombo-embolie',
+      'Surinfection bactérienne',
+      'COVID long (symptômes > 3 mois)',
+      'Séquelles respiratoires',
+    ],
+    prevention: {
+      primary: [
+        'Vaccination à jour (rappels)',
+        'Mesures barrières',
+        'Aération des espaces clos',
+        'Port du masque en période épidémique',
+      ],
+      secondary: [],
+      vaccination: [
+        {
+          name: 'Vaccin ARNm (Pfizer, Moderna) ou protéique (Novavax)',
+          schedule: 'Primo-vaccination + rappels annuels',
+          indication: 'Toute la population > 6 mois',
+        },
+      ],
+    },
+    guidelines: [
+      {
+        source: 'HAS',
+        year: 2024,
+        title: 'Prise en charge du COVID-19',
+        version: '2024.3',
+        lastUpdated: '2024-11',
+      },
+      {
+        source: 'SFAR',
+        year: 2024,
+        title: 'Réanimation des formes graves de COVID-19',
+        lastUpdated: '2024-09',
+      },
+    ],
+    lastUpdated: '2026-01-25',
+    version: '2.3.0',
+  },
+
+  // ================ INFECTIONS PARASITAIRES ================
+  {
+    id: 'malaria',
+    name: 'Paludisme',
+    commonNames: ['Malaria', 'Fièvre palustre'],
+    searchTerms: {
+      primary: ['paludisme', 'malaria', 'palu'],
+      synonyms: ['fièvre palustre', 'infection à plasmodium'],
+      icd10: ['B50', 'B51', 'B52', 'B53'],
+      clinicalSigns: [
+        'fièvre',
+        'frissons',
+        'sueurs',
+        'céphalées',
+        'nausées',
+        'vomissements',
+        'splénomégalie',
+        'anémie',
+      ],
+      keywords: ['parasite', 'plasmodium', 'moustique', 'anophèle', 'tropical', 'zone endémique'],
+    },
+    type: 'parasitic',
+    severity: 'life-threatening',
+    territory: 'tropical',
+    organ: 'Sang',
+    specialty: ['Infectiologie', 'Médecine tropicale', 'Réanimation'],
+    epidemiology: {
+      incidence: '5000-6000 cas importés/an en France',
+      prevalence: '247 millions de cas/an dans le monde',
+      seasonality: 'Toute l\'année en zone tropicale',
+      riskFactors: [
+        'Voyage en zone d\'endémie',
+        'Absence de chimioprophylaxie',
+        'Grossesse',
+        'Jeune enfant',
+        'Immunodépression',
+        'Splénectomie',
+      ],
+      ageGroups: ['Tous âges', 'Enfants < 5 ans en zone d\'endémie'],
+    },
+    diagnostic: {
+      clinical: {
+        major: [
+          'Fièvre > 38°C',
+          'Accès fébriles périodiques (tierces, quartes)',
+          'Notion de voyage en zone d\'endémie < 3 mois',
+        ],
+        minor: [
+          'Frissons intenses',
+          'Sueurs profuses',
+          'Céphalées',
+          'Troubles digestifs',
+          'Splénomégalie',
+        ],
+        exclusion: [],
+      },
+      biological: {
+        supportive: [
+          'Thrombopénie',
+          'Anémie',
+          'Hyperbilirubinémie',
+          'LDH élevées',
+          'Insuffisance rénale (forme grave)',
+        ],
+        threshold: {
+          plaquettes: '< 150 000/mm³',
+          hémoglobine: '< 10 g/dL',
+          bilirubine: '> 30 µmol/L',
+        },
+      },
+      imaging: {
+        firstLine: [],
+        secondLine: ['Échographie abdominale (splénomégalie)'],
+        findings: ['Splénomégalie', 'Hépatomégalie possible'],
+      },
+      microbiological: {
+        samples: [
+          'Frottis sanguin + goutte épaisse (gold standard)',
+          'Test de diagnostic rapide (TDR)',
+          'PCR Plasmodium',
+        ],
+        tests: [
+          'Frottis mince (identification espèce)',
+          'Goutte épaisse (sensibilité)',
+          'TDR HRP2/pLDH',
+        ],
+        expectedPathogens: [
+          'Plasmodium falciparum',
+          'P. vivax',
+          'P. ovale',
+          'P. malariae',
+          'P. knowlesi',
+        ],
+      },
+    },
+    severityScores: [],
+    differentialDiagnosis: [
+      'Dengue',
+      'Chikungunya',
+      'Fièvre typhoïde',
+      'Sepsis bactérien',
+      'Arbovirose',
+      'Leishmaniose viscérale',
+    ],
+    pathogens: [
+      {
+        name: 'Plasmodium falciparum',
+        frequency: '85% (cas importés)',
+        notes: 'Forme potentiellement grave',
+      },
+      {
+        name: 'P. vivax',
+        frequency: '10%',
+        notes: 'Rechutes possibles (hypnozoïtes)',
+      },
+      {
+        name: 'P. ovale',
+        frequency: '3%',
+        notes: 'Rechutes tardives',
+      },
+      {
+        name: 'P. malariae',
+        frequency: '2%',
+        notes: 'Parasitémie chronique',
+      },
+    ],
+    resistanceData: [
+      {
+        pathogen: 'Plasmodium falciparum',
+        mechanism: ['Résistance chloroquine', 'Résistance artémisinine (Asie du Sud-Est)'],
+        prevalence: {
+          france: 0,
+          trend: 'increasing',
+        },
+        affectedAntibiotics: ['Chloroquine (résistance généralisée en Afrique)'],
+        alternativeOptions: [
+          'Artéméther-Luméfantrine',
+          'Atovaquone-Proguanil',
+          'Quinine IV + doxycycline',
+        ],
+        frarRecommendation:
+          'Ne plus utiliser chloroquine seule. Privilégier ACT (combinaisons à base d\'artémisinine).',
+        lastUpdate: '2025-12',
+      },
+    ],
+    antibiotherapy: {
+      probabilistic: [
+        {
+          name: 'Paludisme non compliqué à P. falciparum',
+          indication: 'Paludisme simple, parasitémie < 4%, pas de signes de gravité',
+          context: 'hospital',
+          line: 'first',
+          molecules: [
+            {
+              name: 'Artéméther-Luméfantrine (Riamet®)',
+              dosage: '4 cp',
+              frequency: 'À H0, H8, H24, H36, H48, H60',
+              duration: '3 jours',
+              route: 'PO',
+              notes: 'Traitement de référence, efficacité > 95%',
+            },
+          ],
+          contraindications: ['Grossesse T1 (avec précaution)', 'Allergie artémisinine'],
+          monitoring: ['Parasitémie à J3 et J7', 'NFS', 'Tolérance'],
+          costCategory: 'moderate',
+          availability: 'hospital-only',
+        },
+        {
+          name: 'Alternative - Atovaquone-Proguanil',
+          indication: 'Paludisme non compliqué',
+          context: 'hospital',
+          line: 'alternative',
+          molecules: [
+            {
+              name: 'Atovaquone-Proguanil (Malarone®)',
+              dosage: '4 cp',
+              frequency: '1x/jour',
+              duration: '3 jours',
+              route: 'PO',
+              notes: 'Prise avec aliment gras',
+            },
+          ],
+          costCategory: 'high',
+          availability: 'hospital-only',
+        },
+        {
+          name: 'Paludisme grave',
+          indication: 'Signes de gravité, parasitémie > 4%, défaillance d\'organe',
+          context: 'icu',
+          line: 'first',
+          molecules: [
+            {
+              name: 'Artésunate IV',
+              dosage: '2.4 mg/kg',
+              frequency: 'À H0, H12, H24 puis 1x/jour',
+              duration: 'Jusqu\'à relais PO possible',
+              route: 'IV',
+              notes: 'Traitement de référence du paludisme grave (OMS)',
+            },
+          ],
+          monitoring: [
+            'Parasitémie toutes les 12h',
+            'Signes neurologiques',
+            'Fonction rénale',
+            'Glycémie',
+            'Hémolyse post-artésunate (surveillance 4 semaines)',
+          ],
+          deescalation: {
+            criteria: ['Parasitémie < 1%', 'Apyrexie', 'Amélioration clinique', 'Tolérance orale'],
+            to: 'Artéméther-Luméfantrine PO (cure complète)',
+            timing: 'Dès que possible',
+          },
+          costCategory: 'high',
+          availability: 'hospital-only',
+        },
+      ],
+      documented: [],
+      duration: {
+        standard: '3 jours (ACT)',
+        severe: 'IV jusqu\'à amélioration + relais PO 3 jours',
+        notes: 'P. vivax et ovale nécessitent traitement hypnozoïtes (primaquine 14j)',
+      },
+    },
+    supportiveCare: [
+      'Réhydratation',
+      'Surveillance neurologique (neuropaludisme)',
+      'Traitement symptomatique (fièvre, douleurs)',
+      'Transfusion si anémie sévère',
+      'Épuration extrarénale si insuffisance rénale',
+    ],
+    complications: [
+      'Neuropaludisme (coma)',
+      'Insuffisance rénale aiguë',
+      'OAP/SDRA',
+      'Anémie sévère',
+      'Hypoglycémie',
+      'Acidose métabolique',
+      'Choc',
+      'Splénomégalie rupture',
+    ],
+    prevention: {
+      primary: [
+        'Chimioprophylaxie selon zone (Malarone®, Doxycycline, Lariam®)',
+        'Protection mécanique (moustiquaire imprégnée)',
+        'Répulsifs cutanés',
+        'Vêtements longs au crépuscule',
+      ],
+      secondary: [
+        'Consultation si fièvre au retour de zone d\'endémie',
+        'Surveillance prolongée (rechutes P. vivax/ovale)',
+      ],
+    },
+    guidelines: [
+      {
+        source: 'SPILF',
+        year: 2024,
+        title: 'Prise en charge et prévention du paludisme d\'importation',
+        version: '2024.1',
+        lastUpdated: '2024-06',
+      },
+      {
+        source: 'HAS',
+        year: 2023,
+        title: 'Recommandations sanitaires pour les voyageurs',
+        lastUpdated: '2023-05',
+      },
+    ],
+    lastUpdated: '2026-01-28',
+    version: '2.2.0',
+  },
 ];
 
 // Fonction utilitaire pour getAllDiseases de manière synchrone

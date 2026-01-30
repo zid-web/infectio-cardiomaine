@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Search, Filter, Activity, BookOpen, Pill, AlertCircle, Download } from 'lucide-react';
+import { Search, Filter, Activity, BookOpen, Pill, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { DiagnosticSearchEngine } from '@/lib/services/diagnostic-search';
 import { sampleDiseases } from '@/lib/data/sample-diseases';
+import { InstallGuide } from '@/components/install-guide';
 import type { SearchFilters, InfectionType, InfectionSeverity } from '@/lib/types/infections';
 
 export default function HomePage() {
@@ -15,32 +16,8 @@ export default function HomePage() {
   const [filters, setFilters] = useState<SearchFilters>({});
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   const stats = useMemo(() => searchEngine.getStats(), [searchEngine]);
-
-  // PWA Install prompt
-  useEffect(() => {
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    
-    window.addEventListener('beforeinstallprompt', handler);
-    
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
-  const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      setDeferredPrompt(null);
-    }
-  };
 
   // Recherche avec debounce
   useEffect(() => {
@@ -82,38 +59,36 @@ export default function HomePage() {
   const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50/30 to-cyan-50">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-border">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-border shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-cyan-600 flex items-center justify-center">
-                <Activity className="w-7 h-7 text-white" />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <Activity className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
               <div>
                 <h1 className="text-xl font-bold text-foreground">Infectio Cardiomaine</h1>
-                <p className="text-sm text-muted-foreground">Guide Diagnostique Infectieux</p>
+                <p className="text-sm text-muted-foreground">Moteur de Recherche Diagnostique</p>
               </div>
             </div>
             
             <div className="flex items-center gap-2">
-              {deferredPrompt && (
-                <button
-                  onClick={handleInstallClick}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-sm font-medium"
-                >
-                  <Download className="w-4 h-4" />
-                  Installer l&apos;app
-                </button>
-              )}
-              
               <Link
                 href="/antibiotherapy"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border-2 border-border text-foreground hover:border-primary hover:shadow-lg transition-all text-sm font-medium"
               >
                 <Pill className="w-4 h-4" />
-                Antibiothérapie
+                <span className="hidden sm:inline">Antibiothérapie</span>
+              </Link>
+              
+              <Link
+                href="/guidelines"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg text-sm font-semibold"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline">Guidelines</span>
               </Link>
             </div>
           </div>
@@ -121,37 +96,42 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-12 pb-8">
-        <div className="max-w-4xl mx-auto text-center space-y-6 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+      <section className="container mx-auto px-4 pt-16 pb-12">
+        <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600/10 to-indigo-600/10 border border-blue-200 text-blue-700 text-sm font-semibold shadow-sm">
             <Activity className="w-4 h-4" />
-            Recommandations SPILF • FRAR • SRLF 2024-2026
+            Recommandations SPILF • SFAR • SRLF • FRAR 2024-2026
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-balance">
+          <h2 className="text-5xl md:text-6xl font-extrabold text-balance leading-tight">
             Moteur de Recherche
-            <span className="block text-primary mt-2">Diagnostique Infectieux</span>
+            <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 bg-clip-text text-transparent mt-2">Diagnostique Infectieux</span>
           </h2>
           
-          <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-            Accès rapide aux recommandations actualisées sur le diagnostic et la prise en charge des infections selon les sociétés savantes françaises
+          <p className="text-xl text-muted-foreground text-pretty max-w-3xl mx-auto leading-relaxed">
+            Accès rapide et intelligent aux recommandations actualisées pour le diagnostic et la prise en charge des infections bactériennes, virales, parasitaires et fongiques
           </p>
 
-          {/* Stats */}
-          <div className="flex items-center justify-center gap-8 pt-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary">{stats.total}</div>
-              <div className="text-sm text-muted-foreground">Pathologies</div>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 max-w-4xl mx-auto">
+            <div className="p-6 rounded-2xl bg-white border border-border shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-extrabold bg-gradient-to-br from-blue-600 to-indigo-600 bg-clip-text text-transparent">{stats.total}</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Pathologies</div>
             </div>
-            <div className="w-px h-12 bg-border" />
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary">{Object.keys(stats.byOrgan).length}</div>
-              <div className="text-sm text-muted-foreground">Organes</div>
+            
+            <div className="p-6 rounded-2xl bg-white border border-border shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-extrabold bg-gradient-to-br from-indigo-600 to-purple-600 bg-clip-text text-transparent">{stats.byType.bacterial || 0}</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Bactériennes</div>
             </div>
-            <div className="w-px h-12 bg-border" />
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary">2026</div>
-              <div className="text-sm text-muted-foreground">À jour</div>
+            
+            <div className="p-6 rounded-2xl bg-white border border-border shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-extrabold bg-gradient-to-br from-purple-600 to-pink-600 bg-clip-text text-transparent">{stats.byType.viral || 0}</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Virales</div>
+            </div>
+            
+            <div className="p-6 rounded-2xl bg-white border border-border shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-extrabold bg-gradient-to-br from-cyan-600 to-teal-600 bg-clip-text text-transparent">{Object.keys(stats.byOrgan).length}</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Territoires</div>
             </div>
           </div>
         </div>
@@ -159,14 +139,14 @@ export default function HomePage() {
 
       {/* Search Section */}
       <section className="container mx-auto px-4 pb-12">
-        <div className="max-w-4xl mx-auto space-y-4">
+        <div className="max-w-5xl mx-auto space-y-6">
           {/* Search Bar */}
           <div className="relative">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <div className="relative group">
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
-                placeholder="Rechercher par pathologie, symptôme, pathogène, organe..."
+                placeholder="Rechercher par pathologie, symptôme, pathogène, organe, contexte clinique..."
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -174,19 +154,20 @@ export default function HomePage() {
                 }}
                 onFocus={() => setShowSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                className="w-full h-14 pl-12 pr-32 rounded-xl border-2 border-border bg-white shadow-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-base"
+                className="w-full h-16 pl-14 pr-36 rounded-2xl border-2 border-border bg-white shadow-xl hover:shadow-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 outline-none transition-all text-base font-medium"
               />
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                className={`absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2 px-5 py-2.5 rounded-xl transition-all font-semibold ${
                   showFilters || activeFilterCount > 0
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 <Filter className="w-4 h-4" />
+                <span className="hidden sm:inline">Filtres</span>
                 {activeFilterCount > 0 && (
-                  <span className="text-sm font-medium">{activeFilterCount}</span>
+                  <span className="w-6 h-6 rounded-full bg-white text-blue-600 text-xs font-bold flex items-center justify-center">{activeFilterCount}</span>
                 )}
               </button>
             </div>
@@ -211,6 +192,46 @@ export default function HomePage() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Quick Filters */}
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-sm font-medium text-muted-foreground">Recherches rapides:</span>
+            
+            <button
+              onClick={() => setSearchQuery('pneumonie')}
+              className="px-4 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium transition-colors border border-blue-200"
+            >
+              Pneumonie
+            </button>
+            
+            <button
+              onClick={() => setSearchQuery('infection urinaire')}
+              className="px-4 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 text-sm font-medium transition-colors border border-purple-200"
+            >
+              Infection urinaire
+            </button>
+            
+            <button
+              onClick={() => setSearchQuery('grippe')}
+              className="px-4 py-2 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-700 text-sm font-medium transition-colors border border-pink-200"
+            >
+              Grippe
+            </button>
+            
+            <button
+              onClick={() => setSearchQuery('covid')}
+              className="px-4 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-sm font-medium transition-colors border border-indigo-200"
+            >
+              COVID-19
+            </button>
+            
+            <button
+              onClick={() => setSearchQuery('paludisme')}
+              className="px-4 py-2 rounded-xl bg-green-50 hover:bg-green-100 text-green-700 text-sm font-medium transition-colors border border-green-200"
+            >
+              Paludisme
+            </button>
           </div>
 
           {/* Filters Panel */}
@@ -420,7 +441,7 @@ export default function HomePage() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="text-sm text-muted-foreground text-center md:text-left">
                 <p className="font-medium mb-1">Application professionnelle de santé</p>
-                <p>Basée sur les recommandations SPILF • FRAR • SRLF</p>
+                <p>Basée sur les recommandations SPILF • SFAR • SRLF • FRAR</p>
               </div>
               
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -435,6 +456,9 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Install Guide Component */}
+      <InstallGuide />
     </div>
   );
 }

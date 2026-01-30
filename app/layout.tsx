@@ -24,11 +24,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Infectio Cardiomaine - Guide Diagnostique Infectieux',
+    default: 'Infectio Cardiomaine - Moteur de Recherche Diagnostique Infectieux',
     template: '%s | Infectio Cardiomaine',
   },
-  description: 'Moteur de recherche diagnostique et guide antibiothérapie selon les recommandations SPILF, FRAR, SRLF. Application PWA pour professionnels de santé.',
-  keywords: ['infectiologie', 'SPILF', 'antibiothérapie', 'diagnostic infectieux', 'FRAR', 'SRLF', 'médecine', 'cardiologie'],
+  description: 'Moteur de recherche intelligent pour le diagnostic et la prise en charge des infections bactériennes, virales, parasitaires et fongiques. Recommandations SPILF, SFAR, SRLF, FRAR actualisées. Application PWA professionnelle.',
+  keywords: ['infectiologie', 'SPILF', 'SFAR', 'SRLF', 'FRAR', 'antibiothérapie', 'diagnostic infectieux', 'moteur de recherche médical', 'infections bactériennes', 'infections virales', 'infections parasitaires', 'médecine', 'réanimation'],
   authors: [{ name: 'Infectio Cardiomaine' }],
   creator: 'Infectio Cardiomaine',
   publisher: 'Infectio Cardiomaine',
