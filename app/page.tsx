@@ -1,14 +1,38 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Search, Pill, AlertCircle, ChevronRight } from 'lucide-react';
+import { useState, useMemo, useEffect } from 'react';
+import { Search, Pill, AlertCircle, ChevronRight, Download } from 'lucide-react';
 import Link from 'next/link';
 import { DiagnosticSearchEngine } from '@/lib/services/diagnostic-search';
 import { sampleDiseases } from '@/lib/data/sample-diseases';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const searchEngine = useMemo(() => new DiagnosticSearchEngine(sampleDiseases), []);
+
+  // PWA Install prompt detection
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    
+    window.addEventListener('beforeinstallprompt', handler);
+    
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+  };
   
   const results = useMemo(() => {
     if (!searchQuery.trim()) {
@@ -20,16 +44,29 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header POPI Style */}
-      <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
+      <header className="border-b border-gray-200 bg-white sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <h1 className="text-xl font-bold text-gray-900">Infectio</h1>
-            <Link
-              href="/antibiotherapy"
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-            >
-              ATB
-            </Link>
+            
+            <div className="flex items-center gap-2">
+              {deferredPrompt && (
+                <button
+                  onClick={handleInstallClick}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm font-semibold shadow-md hover:shadow-lg"
+                >
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">Installer</span>
+                </button>
+              )}
+              
+              <Link
+                href="/antibiotherapy"
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+              >
+                ATB
+              </Link>
+            </div>
           </div>
         </div>
       </header>
