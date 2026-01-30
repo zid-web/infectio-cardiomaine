@@ -317,13 +317,13 @@ export default function HomePage() {
                 <Link
                   key={result.disease.id}
                   href={`/disease/${result.disease.id}`}
-                  className="block p-6 rounded-xl border border-border bg-white hover:border-primary hover:shadow-lg transition-all animate-slide-up"
+                  className="block p-6 rounded-xl border border-border bg-white hover:border-primary hover:shadow-lg transition-all animate-slide-up group"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
-                        <h4 className="font-semibold text-lg mb-1">{result.disease.name}</h4>
+                        <h4 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">{result.disease.name}</h4>
                         {result.disease.commonNames[0] && (
                           <p className="text-sm text-muted-foreground">
                             {result.disease.commonNames[0]}
@@ -333,43 +333,96 @@ export default function HomePage() {
                       
                       <div className="flex items-center gap-2">
                         {result.relevance === 'high' && (
-                          <div className="w-2 h-2 rounded-full bg-medical-green" />
+                          <div className="px-2 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
+                            ✓ Pertinent
+                          </div>
                         )}
                       </div>
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${
+                      <span className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${
                         result.disease.type === 'bacterial'
-                          ? 'bg-blue-100 text-blue-700'
+                          ? 'bg-blue-100 text-blue-700 border border-blue-200'
                           : result.disease.type === 'viral'
-                          ? 'bg-purple-100 text-purple-700'
+                          ? 'bg-purple-100 text-purple-700 border border-purple-200'
                           : result.disease.type === 'fungal'
-                          ? 'bg-orange-100 text-orange-700'
-                          : 'bg-green-100 text-green-700'
+                          ? 'bg-orange-100 text-orange-700 border border-orange-200'
+                          : 'bg-green-100 text-green-700 border border-green-200'
                       }`}>
-                        {result.disease.type === 'bacterial' && 'Bactérienne'}
-                        {result.disease.type === 'viral' && 'Virale'}
-                        {result.disease.type === 'fungal' && 'Fongique'}
-                        {result.disease.type === 'parasitic' && 'Parasitaire'}
+                        {result.disease.type === 'bacterial' && '🦠 Bactérienne'}
+                        {result.disease.type === 'viral' && '🧬 Virale'}
+                        {result.disease.type === 'fungal' && '🍄 Fongique'}
+                        {result.disease.type === 'parasitic' && '🦟 Parasitaire'}
                       </span>
                       
-                      <span className="px-2 py-1 rounded text-xs font-medium bg-secondary text-secondary-foreground">
+                      <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200">
                         {result.disease.organ}
                       </span>
                       
                       {result.disease.severity === 'life-threatening' && (
-                        <span className="px-2 py-1 rounded text-xs font-medium bg-red-100 text-red-700 flex items-center gap-1">
+                        <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-red-100 text-red-700 flex items-center gap-1 border border-red-200">
                           <AlertCircle className="w-3 h-3" />
                           Grave
                         </span>
                       )}
                     </div>
 
+                    {/* Conduite à tenir - Aperçu */}
+                    {result.disease.antibiotherapy.probabilistic.length > 0 && (
+                      <div className="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
+                        <div className="flex items-start gap-2 mb-2">
+                          <Pill className="w-4 h-4 text-blue-600 mt-0.5" />
+                          <div className="flex-1">
+                            <h5 className="text-sm font-semibold text-blue-900 mb-1">Conduite à tenir</h5>
+                            <p className="text-xs text-blue-700 font-medium">
+                              {result.disease.antibiotherapy.probabilistic[0].name}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        {/* Premier antibiotique */}
+                        {result.disease.antibiotherapy.probabilistic[0].molecules[0] && (
+                          <div className="mt-2 pt-2 border-t border-blue-200">
+                            <p className="text-xs text-blue-800">
+                              <span className="font-semibold">{result.disease.antibiotherapy.probabilistic[0].molecules[0].name}</span>
+                              {' '}
+                              {result.disease.antibiotherapy.probabilistic[0].molecules[0].dosage}
+                              {' '}
+                              {result.disease.antibiotherapy.probabilistic[0].molecules[0].frequency}
+                              {' • '}
+                              {result.disease.antibiotherapy.probabilistic[0].molecules[0].duration}
+                            </p>
+                          </div>
+                        )}
+                        
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className="text-xs text-blue-600 font-medium">
+                            Cliquer pour protocole complet →
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Critères diagnostiques clés */}
+                    {result.disease.diagnostic.clinical.major.length > 0 && (
+                      <div className="pt-3 border-t border-border">
+                        <h5 className="text-xs font-semibold text-foreground mb-2">Critères majeurs</h5>
+                        <ul className="space-y-1">
+                          {result.disease.diagnostic.clinical.major.slice(0, 3).map((criteria, idx) => (
+                            <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                              <span className="text-primary mt-0.5">•</span>
+                              <span>{criteria}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
                     {result.matchedTerms.length > 0 && (
-                      <div className="pt-2 border-t border-border">
+                      <div className="pt-3 border-t border-border">
                         <p className="text-xs text-muted-foreground">
-                          Correspondance: {result.matchedTerms.slice(0, 3).join(', ')}
+                          <span className="font-medium">Correspondance:</span> {result.matchedTerms.slice(0, 3).join(', ')}
                         </p>
                       </div>
                     )}
